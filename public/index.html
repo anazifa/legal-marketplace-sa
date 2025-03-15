@@ -15,18 +15,16 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.31"></script>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-100">
     <div id="app" class="min-h-screen">
         <nav class="bg-white shadow-lg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-4">
                 <div class="flex justify-between h-16">
-                    <div class="flex">
-                        <div class="flex-shrink-0 flex items-center">
-                            <h1 class="text-2xl font-bold text-gray-800">Legal Marketplace SA</h1>
-                        </div>
+                    <div class="flex items-center">
+                        <h1 class="text-xl font-bold text-gray-800">Legal Marketplace SA</h1>
                     </div>
                     <div class="flex items-center">
-                        <button @click="trackLogin" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Login
                         </button>
                     </div>
@@ -34,34 +32,30 @@
             </div>
         </nav>
 
-        <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <div class="px-4 py-6 sm:px-0">
-                <div class="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
-                    <div class="text-center">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-4">
-                            Welcome to Legal Marketplace SA
-                        </h2>
-                        <p class="text-gray-600 mb-8">
-                            Connecting clients with qualified lawyers in Saudi Arabia
-                        </p>
-                        <div class="space-x-4">
-                            <button @click="trackFindLawyer" class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg">
-                                Find a Lawyer
-                            </button>
-                            <button @click="trackPostRequest" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg">
-                                Post a Request
-                            </button>
-                        </div>
-                    </div>
+        <main class="max-w-7xl mx-auto py-12 px-4">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Welcome to Legal Marketplace SA
+                </h2>
+                <p class="mt-4 text-xl text-gray-500">
+                    Connect with top legal professionals in Saudi Arabia
+                </p>
+                <div class="mt-8 flex justify-center space-x-4">
+                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg">
+                        Find a Lawyer
+                    </button>
+                    <button class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg">
+                        Post a Request
+                    </button>
                 </div>
             </div>
         </main>
 
-        <footer class="bg-white shadow-lg mt-8">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <div class="text-center text-gray-500">
-                    <p>&copy; 2024 Legal Marketplace SA. All rights reserved.</p>
-                </div>
+        <footer class="bg-white mt-12">
+            <div class="max-w-7xl mx-auto py-6 px-4">
+                <p class="text-center text-gray-500">
+                    © 2024 Legal Marketplace SA. All rights reserved.
+                </p>
             </div>
         </footer>
     </div>

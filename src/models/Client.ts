@@ -1,35 +1,25 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-export interface IClient extends mongoose.Document {
+export interface IClient extends Document {
   name: string;
   email: string;
   password: string;
   phone: string;
-  location: {
-    city: string;
-    region: string;
-  };
-  nationalId?: string;
-  preferredLanguage: string;
+  location: string;
+  nationalId: string;
+  preferredLanguage: 'en' | 'ar';
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
-const clientSchema = new mongoose.Schema({
+const clientSchema = new Schema<IClient>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   phone: { type: String, required: true },
-  location: {
-    city: { type: String, required: true },
-    region: { type: String, required: true }
-  },
-  nationalId: { type: String },
-  preferredLanguage: { 
-    type: String, 
-    enum: ['ar', 'en'], 
-    default: 'ar' 
-  },
+  location: { type: String, required: true },
+  nationalId: { type: String, required: true, unique: true },
+  preferredLanguage: { type: String, enum: ['en', 'ar'], default: 'ar' },
   createdAt: { type: Date, default: Date.now }
 });
 
@@ -41,8 +31,8 @@ clientSchema.pre('save', async function(next) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
-  } catch (error) {
-    next(error as Error);
+  } catch (error: any) {
+    next(error);
   }
 });
 
@@ -51,4 +41,4 @@ clientSchema.methods.comparePassword = async function(candidatePassword: string)
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-export default mongoose.model<IClient>('Client', clientSchema); 
+export const Client = mongoose.model<IClient>('Client', clientSchema); 

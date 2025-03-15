@@ -1,40 +1,39 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-export interface ILawyer extends mongoose.Document {
+export interface ILawyer extends Document {
   name: string;
   email: string;
   password: string;
-  specialization: string;
+  specialization: string[];
   experience: number;
-  rating?: number;
-  priceRange: string;
+  rating: number;
+  priceRange: {
+    min: number;
+    max: number;
+  };
   verified: boolean;
   licenseNumber: string;
   languages: string[];
-  location: {
-    city: string;
-    region: string;
-  };
+  location: string;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
-const lawyerSchema = new mongoose.Schema({
+const lawyerSchema = new Schema<ILawyer>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  specialization: { type: String, required: true },
+  specialization: [{ type: String, required: true }],
   experience: { type: Number, required: true },
   rating: { type: Number, default: 0 },
-  priceRange: { type: String, required: true },
+  priceRange: {
+    min: { type: Number, required: true },
+    max: { type: Number, required: true }
+  },
   verified: { type: Boolean, default: false },
   licenseNumber: { type: String, required: true, unique: true },
-  languages: [{ type: String }],
-  location: {
-    city: { type: String, required: true },
-    region: { type: String, required: true }
-  },
-  createdAt: { type: Date, default: Date.now }
+  languages: [{ type: String, required: true }],
+  location: { type: String, required: true }
 });
 
 // Hash password before saving
@@ -45,8 +44,8 @@ lawyerSchema.pre('save', async function(next) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
-  } catch (error) {
-    next(error as Error);
+  } catch (error: any) {
+    next(error);
   }
 });
 
@@ -55,4 +54,4 @@ lawyerSchema.methods.comparePassword = async function(candidatePassword: string)
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-export default mongoose.model<ILawyer>('Lawyer', lawyerSchema); 
+export const Lawyer = mongoose.model<ILawyer>('Lawyer', lawyerSchema); 
