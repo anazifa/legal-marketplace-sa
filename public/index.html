@@ -334,6 +334,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="/legal-marketplace-sa/js/analytics.js"></script>
     <script>
         // Add smooth scrolling with keyboard navigation support
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -455,15 +456,31 @@
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('/legal-marketplace-sa/sw.js')
                     .then(registration => {
                         console.log('Service Worker registered:', registration);
+                        window.Analytics.behavior.trackEvent('sw_registered', {
+                            success: true
+                        });
                     })
                     .catch(error => {
                         console.error('Service Worker registration failed:', error);
+                        window.Analytics.error.logError({
+                            type: 'sw_registration',
+                            message: error.message,
+                            stack: error.stack
+                        });
                     });
             });
         }
+
+        // Track performance metrics
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const metrics = window.Analytics.performance.getMetrics();
+                window.Analytics.behavior.trackEvent('performance_metrics', metrics);
+            }, 3000); // Wait for metrics to stabilize
+        });
     </script>
 </body>
 </html> 
