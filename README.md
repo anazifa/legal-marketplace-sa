@@ -1,145 +1,181 @@
-# Legal Marketplace SA
+# Legal Marketplace Admin Panel
 
-A modern legal services marketplace platform for Saudi Arabia, connecting clients with qualified lawyers.
+A comprehensive admin panel for managing a legal marketplace platform. Built with Node.js, Express, TypeScript, and PostgreSQL.
 
-## 🌟 Features
+## Features
 
-- User authentication (Lawyers and Clients)
-- Real-time bidding system
-- Secure payment processing
-- Multi-language support (English/Arabic)
-- Role-based access control
-- Escrow payment system
+- **Dashboard**
+  - Real-time statistics and metrics
+  - Activity monitoring
+  - System alerts
+  - Performance analytics
 
-## 🚀 Deployment
+- **Case Management**
+  - Create and manage legal cases
+  - Assign lawyers to cases
+  - Track case status and progress
+  - File attachment support
+  - Advanced filtering and search
 
-### Using Docker (Recommended)
+- **User Management**
+  - Manage lawyers and clients
+  - User role management
+  - Profile management
+  - Activity tracking
 
-1. Build and run with Docker Compose:
-```bash
-docker-compose up --build
-```
+- **Practice Areas**
+  - Categorize legal services
+  - Track case distribution
+  - Manage specializations
 
-2. Access the application at `http://localhost:8080`
+- **Reports & Analytics**
+  - Revenue tracking
+  - User activity analysis
+  - Case statistics
+  - Custom report generation
 
-To run in detached mode:
-```bash
-docker-compose up -d
-```
+## Prerequisites
 
-To stop the containers:
-```bash
-docker-compose down
-```
+- Node.js (v14 or higher)
+- PostgreSQL (v12 or higher)
+- TypeScript
+- npm or yarn
 
-### GitHub Pages Deployment
-
-This application is automatically deployed to GitHub Pages. You can view it at:
-`https://[your-username].github.io/legal-marketplace-sa`
-
-### Manual Deployment Steps
-
-1. Fork this repository
-2. Go to repository Settings > Pages
-3. Set source to "GitHub Actions"
-4. Push any change to the main branch to trigger deployment
-
-## 🛠️ Development
-
-### Prerequisites
-
-- Node.js (v18+) and npm
-- MongoDB
-- Stripe account
-
-### Local Setup
+## Installation
 
 1. Clone the repository:
-```bash
-git clone https://github.com/[your-username]/legal-marketplace-sa.git
-cd legal-marketplace-sa
-```
+   ```bash
+   git clone https://github.com/yourusername/legal-marketplace-admin.git
+   cd legal-marketplace-admin
+   ```
 
 2. Install dependencies:
-```bash
-npm install
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file in the root directory with the following variables:
+   ```env
+   # Database Configuration
+   DB_USER=your_db_user
+   DB_HOST=localhost
+   DB_NAME=legal_marketplace
+   DB_PASSWORD=your_db_password
+   DB_PORT=5432
+
+   # Server Configuration
+   PORT=3000
+   NODE_ENV=development
+
+   # JWT Configuration
+   JWT_SECRET=your_jwt_secret
+   JWT_EXPIRES_IN=24h
+
+   # File Upload Configuration
+   MAX_FILE_SIZE=10485760 # 10MB
+   UPLOAD_DIR=uploads
+   ```
+
+4. Initialize the database:
+   ```bash
+   npm run init-db
+   ```
+
+5. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Project Structure
+
+```
+├── src/
+│   ├── middleware/
+│   │   ├── auth.ts
+│   │   └── upload.ts
+│   ├── routes/
+│   │   └── admin.ts
+│   ├── db/
+│   │   └── schema.sql
+│   └── index.ts
+├── public/
+│   └── admin/
+│       ├── index.html
+│       └── js/
+│           └── admin.js
+├── uploads/
+├── .env
+├── .gitignore
+├── package.json
+└── tsconfig.json
 ```
 
-3. Start development server:
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/login` - Admin login
+- `POST /api/auth/logout` - Admin logout
+
+### Dashboard
+- `GET /api/admin/dashboard/stats` - Get dashboard statistics
+
+### Cases
+- `GET /api/admin/cases` - List all cases
+- `POST /api/admin/cases` - Create a new case
+- `GET /api/admin/cases/:id` - Get case details
+- `PUT /api/admin/cases/:id` - Update case
+- `DELETE /api/admin/cases/:id` - Delete case
+
+### Case Attachments
+- `POST /api/admin/cases/:id/attachments` - Upload attachments
+- `GET /api/admin/cases/:caseId/attachments/:attachmentId/download` - Download attachment
+- `DELETE /api/admin/cases/:caseId/attachments/:attachmentId` - Delete attachment
+
+### Users
+- `GET /api/admin/users` - List all users
+- `POST /api/admin/users` - Create new user
+
+### Practice Areas
+- `GET /api/admin/practice-areas` - List practice areas
+
+## Security Features
+
+- JWT Authentication
+- Role-based access control
+- File upload validation
+- SQL injection prevention
+- XSS protection
+- Rate limiting
+- Security headers
+
+## Development
+
 ```bash
+# Run in development mode
 npm run dev
+
+# Build for production
+npm run build
+
+# Run in production mode
+npm start
+
+# Run tests
+npm test
 ```
 
-## 📦 Environment Variables
-
-Create a `.env` file with:
-
-```env
-MONGODB_URI=your_mongodb_uri
-JWT_SECRET=your_jwt_secret
-STRIPE_SECRET_KEY=your_stripe_key
-```
-
-## 📊 Analytics Setup
-
-The application uses Google Analytics 4 for tracking user interactions. To set up analytics:
-
-1. Create a Google Analytics 4 property at [Google Analytics](https://analytics.google.com/)
-2. Get your Measurement ID (starts with "G-")
-3. Replace `G-XXXXXXXXXX` in `public/index.html` with your Measurement ID
-
-Tracked Events:
-- Login button clicks
-- Find Lawyer button clicks
-- Post Request button clicks
-
-View your analytics data in the Google Analytics dashboard.
-
-## 🔒 Security
-
-- All sensitive data is stored in GitHub Secrets
-- Authentication using JWT
-- Secure payment processing with Stripe
-- Data encryption in transit and at rest
-
-## 📱 Features
-
-### For Clients
-- Post legal requests
-- Browse lawyer profiles
-- Real-time bidding
-- Secure payments
-- Rate lawyers
-
-### For Lawyers
-- Professional profiles
-- Bid on requests
-- Document management
-- Payment tracking
-- Client communication
-
-## 🌐 API Documentation
-
-Available endpoints:
-
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - User login
-- `GET /api/legal-requests` - List legal requests
-- `POST /api/bids` - Place bid
-- `POST /api/payments` - Process payment
-
-## 📞 Support
-
-For support, email [your-email@example.com]
-
-## 📄 License
-
-MIT License - see LICENSE file
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
-2. Create feature branch
-3. Commit changes
-4. Push to branch
-5. Open pull request 
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For support, email support@legalmarketplace.com or open an issue in the GitHub repository. 

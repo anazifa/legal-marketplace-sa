@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Marketplace SA - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="bg-gray-800 text-white w-64 min-h-screen flex flex-col">
+            <div class="p-4">
+                <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+            </div>
+            <div class="flex-1">
+                <ul class="py-4">
+                    <li>
+                        <a href="#dashboard" class="flex items-center px-4 py-3 hover:bg-gray-700 active-nav" data-section="dashboard">
+                            <i class="fas fa-home w-6"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#users" class="flex items-center px-4 py-3 hover:bg-gray-700" data-section="users">
+                            <i class="fas fa-users w-6"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#projects" class="flex items-center px-4 py-3 hover:bg-gray-700" data-section="projects">
+                            <i class="fas fa-briefcase w-6"></i>
+                            <span>Projects</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#categories" class="flex items-center px-4 py-3 hover:bg-gray-700" data-section="categories">
+                            <i class="fas fa-tags w-6"></i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#skills" class="flex items-center px-4 py-3 hover:bg-gray-700" data-section="skills">
+                            <i class="fas fa-graduation-cap w-6"></i>
+                            <span>Skills</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reports" class="flex items-center px-4 py-3 hover:bg-gray-700" data-section="reports">
+                            <i class="fas fa-chart-bar w-6"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#settings" class="flex items-center px-4 py-3 hover:bg-gray-700" data-section="settings">
+                            <i class="fas fa-cog w-6"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="p-4">
+                <button id="logout-btn" class="flex items-center text-red-400 hover:text-red-300">
+                    <i class="fas fa-sign-out-alt w-6"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto">
+            <!-- Top Navigation -->
+            <nav class="bg-white shadow-md">
+                <div class="mx-auto px-4">
+                    <div class="flex items-center justify-between h-16">
+                        <div class="flex items-center">
+                            <button id="menu-toggle" class="text-gray-500 focus:outline-none">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="relative">
+                                <button id="notifications-btn" class="text-gray-500 hover:text-gray-600">
+                                    <i class="fas fa-bell"></i>
+                                    <span id="notification-badge" class="hidden absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs px-2">0</span>
+                                </button>
+                            </div>
+                            <div class="ml-4 relative">
+                                <div class="flex items-center">
+                                    <img id="admin-avatar" class="h-8 w-8 rounded-full" src="/logo.svg" alt="Admin">
+                                    <span id="admin-name" class="ml-2 text-gray-700">Admin</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content Sections -->
+            <div class="p-6">
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="section active">
+                    <h2 class="text-2xl font-semibold mb-6">Dashboard Overview</h2>
+                    
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-blue-500 bg-opacity-10">
+                                    <i class="fas fa-user-tie text-blue-500"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-gray-500 text-sm">Active Law Firms</h3>
+                                    <p id="active-firms" class="text-2xl font-semibold">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-green-500 bg-opacity-10">
+                                    <i class="fas fa-users text-green-500"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-gray-500 text-sm">Active Clients</h3>
+                                    <p id="active-clients" class="text-2xl font-semibold">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-yellow-500 bg-opacity-10">
+                                    <i class="fas fa-gavel text-yellow-500"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-gray-500 text-sm">Active Cases</h3>
+                                    <p id="active-cases" class="text-2xl font-semibold">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-purple-500 bg-opacity-10">
+                                    <i class="fas fa-dollar-sign text-purple-500"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-gray-500 text-sm">Monthly Revenue</h3>
+                                    <p id="monthly-revenue" class="text-2xl font-semibold">$0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Secondary Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-indigo-500 bg-opacity-10">
+                                    <i class="fas fa-clock text-indigo-500"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-gray-500 text-sm">Pending Cases</h3>
+                                    <p id="pending-cases" class="text-2xl font-semibold">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-red-500 bg-opacity-10">
+                                    <i class="fas fa-credit-card text-red-500"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-gray-500 text-sm">Pending Payments</h3>
+                                    <p id="pending-payments" class="text-2xl font-semibold">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-teal-500 bg-opacity-10">
+                                    <i class="fas fa-user-plus text-teal-500"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-gray-500 text-sm">New Clients (Month)</h3>
+                                    <p id="new-clients" class="text-2xl font-semibold">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-pink-500 bg-opacity-10">
+                                    <i class="fas fa-building text-pink-500"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-gray-500 text-sm">New Firms (Month)</h3>
+                                    <p id="new-firms" class="text-2xl font-semibold">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Feed and Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Activity Feed -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-white rounded-lg shadow-md p-6">
+                                <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
+                                <div id="activity-feed" class="space-y-4">
+                                    <!-- Activity items will be dynamically added here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charts -->
+                        <div class="lg:col-span-2">
+                            <div class="grid grid-cols-1 gap-6">
+                                <div class="bg-white rounded-lg shadow-md p-6">
+                                    <h3 class="text-lg font-semibold mb-4">Monthly Trends</h3>
+                                    <canvas id="monthly-trends-chart"></canvas>
+                                </div>
+                                <div class="bg-white rounded-lg shadow-md p-6">
+                                    <h3 class="text-lg font-semibold mb-4">Case Distribution</h3>
+                                    <canvas id="case-distribution-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Alerts -->
+                    <div class="mt-6">
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold mb-4">System Alerts</h3>
+                            <div id="system-alerts" class="space-y-4">
+                                <!-- Alerts will be dynamically added here -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Users Section -->
+                <section id="users-section" class="section hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-semibold">Users Management</h2>
+                        <button id="add-user-btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                            <i class="fas fa-plus mr-2"></i>Add User
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md">
+                        <div class="p-4">
+                            <div class="flex flex-wrap gap-4 mb-4">
+                                <input type="text" id="user-search" placeholder="Search users..." 
+                                       class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <select id="user-role-filter" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">All Roles</option>
+                                    <option value="lawyer">Lawyers</option>
+                                    <option value="client">Clients</option>
+                                    <option value="admin">Admins</option>
+                                </select>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr class="bg-gray-50">
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="users-table-body">
+                                        <!-- Users will be dynamically added here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="text-gray-500 text-sm">
+                                    Showing <span id="users-showing">0</span> of <span id="users-total">0</span> users
+                                </div>
+                                <div class="flex gap-2">
+                                    <button id="prev-users-page" class="px-3 py-1 border rounded-lg disabled:opacity-50">Previous</button>
+                                    <button id="next-users-page" class="px-3 py-1 border rounded-lg disabled:opacity-50">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Projects Section -->
+                <section id="projects-section" class="section hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-semibold">Projects Management</h2>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md">
+                        <div class="p-4">
+                            <div class="flex flex-wrap gap-4 mb-4">
+                                <input type="text" id="project-search" placeholder="Search projects..." 
+                                       class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <select id="project-status-filter" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">All Status</option>
+                                    <option value="open">Open</option>
+                                    <option value="in_progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr class="bg-gray-50">
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Budget</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="projects-table-body">
+                                        <!-- Projects will be dynamically added here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="text-gray-500 text-sm">
+                                    Showing <span id="projects-showing">0</span> of <span id="projects-total">0</span> projects
+                                </div>
+                                <div class="flex gap-2">
+                                    <button id="prev-projects-page" class="px-3 py-1 border rounded-lg disabled:opacity-50">Previous</button>
+                                    <button id="next-projects-page" class="px-3 py-1 border rounded-lg disabled:opacity-50">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Categories Section -->
+                <section id="categories-section" class="section hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-semibold">Categories Management</h2>
+                        <button id="add-category-btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                            <i class="fas fa-plus mr-2"></i>Add Category
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="categories-grid">
+                        <!-- Categories will be dynamically added here -->
+                    </div>
+                </section>
+
+                <!-- Skills Section -->
+                <section id="skills-section" class="section hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-semibold">Skills Management</h2>
+                        <button id="add-skill-btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                            <i class="fas fa-plus mr-2"></i>Add Skill
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex flex-wrap gap-4 mb-4">
+                            <input type="text" id="skill-search" placeholder="Search skills..." 
+                                   class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <select id="skill-category-filter" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">All Categories</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-wrap gap-3" id="skills-container">
+                            <!-- Skills will be dynamically added here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reports Section -->
+                <section id="reports-section" class="section hidden">
+                    <h2 class="text-2xl font-semibold mb-6">Reports & Analytics</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Revenue Report -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold mb-4">Revenue Report</h3>
+                            <canvas id="revenue-report-chart"></canvas>
+                        </div>
+                        <!-- User Activity -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold mb-4">User Activity</h3>
+                            <canvas id="user-activity-chart"></canvas>
+                        </div>
+                        <!-- Project Statistics -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold mb-4">Project Statistics</h3>
+                            <canvas id="project-stats-chart"></canvas>
+                        </div>
+                        <!-- Category Distribution -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold mb-4">Category Distribution</h3>
+                            <canvas id="category-distribution-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings-section" class="section hidden">
+                    <h2 class="text-2xl font-semibold mb-6">System Settings</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- General Settings -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold mb-4">General Settings</h3>
+                            <form id="general-settings-form">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Site Name</label>
+                                    <input type="text" id="site-name" class="w-full px-3 py-2 border rounded-lg">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Contact Email</label>
+                                    <input type="email" id="contact-email" class="w-full px-3 py-2 border rounded-lg">
+                                </div>
+                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                                    Save Changes
+                                </button>
+                            </form>
+                        </div>
+                        <!-- Security Settings -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold mb-4">Security Settings</h3>
+                            <form id="security-settings-form">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                                        <input type="checkbox" id="two-factor-auth">
+                                        Enable Two-Factor Authentication
+                                    </label>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Session Timeout (minutes)</label>
+                                    <input type="number" id="session-timeout" class="w-full px-3 py-2 border rounded-lg">
+                                </div>
+                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                                    Save Changes
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Case Management Section -->
+                <div id="case-management" class="section hidden">
+                    <div class="section-header">
+                        <h2 class="text-2xl font-bold mb-4">Case Management</h2>
+                        <button onclick="openModal('add-case-modal')" class="btn-primary">
+                            <i class="fas fa-plus"></i> New Case
+                        </button>
+                    </div>
+
+                    <!-- Case Filters -->
+                    <div class="filters mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="filter-group">
+                            <label>Status</label>
+                            <select id="case-status-filter" class="form-select">
+                                <option value="">All Statuses</option>
+                                <option value="pending">Pending</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Practice Area</label>
+                            <select id="practice-area-filter" class="form-select">
+                                <option value="">All Areas</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Date Range</label>
+                            <input type="date" id="date-from" class="form-input">
+                            <input type="date" id="date-to" class="form-input">
+                        </div>
+                        <div class="filter-group">
+                            <label>Search</label>
+                            <input type="text" id="case-search" placeholder="Search cases..." class="form-input">
+                        </div>
+                    </div>
+
+                    <!-- Cases Table -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead>
+                                <tr>
+                                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        Case ID
+                                    </th>
+                                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        Title
+                                    </th>
+                                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        Client
+                                    </th>
+                                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        Lawyer
+                                    </th>
+                                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        Practice Area
+                                    </th>
+                                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        Created
+                                    </th>
+                                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="cases-table-body">
+                                <!-- Cases will be dynamically populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-4 flex items-center justify-between">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            <button class="btn-secondary">Previous</button>
+                            <button class="btn-secondary">Next</button>
+                        </div>
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm leading-5 text-gray-700">
+                                    Showing
+                                    <span class="font-medium" id="pagination-start">1</span>
+                                    to
+                                    <span class="font-medium" id="pagination-end">10</span>
+                                    of
+                                    <span class="font-medium" id="pagination-total">20</span>
+                                    results
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex shadow-sm">
+                                    <button class="btn-pagination" id="prev-page">
+                                        Previous
+                                    </button>
+                                    <div id="pagination-numbers" class="flex">
+                                        <!-- Page numbers will be dynamically populated here -->
+                                    </div>
+                                    <button class="btn-pagination" id="next-page">
+                                        Next
+                                    </button>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add/Edit Case Modal -->
+                <div id="add-case-modal" class="modal hidden">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="text-lg font-semibold" id="case-modal-title">Add New Case</h3>
+                            <button onclick="closeModal('add-case-modal')" class="modal-close">&times;</button>
+                        </div>
+                        <form id="case-form" class="modal-body">
+                            <input type="hidden" id="case-id">
+                            <div class="form-group">
+                                <label for="case-title">Title</label>
+                                <input type="text" id="case-title" required class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="case-description">Description</label>
+                                <textarea id="case-description" rows="4" class="form-textarea"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="case-client">Client</label>
+                                <select id="case-client" required class="form-select">
+                                    <!-- Clients will be dynamically populated here -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="case-lawyer">Lawyer</label>
+                                <select id="case-lawyer" class="form-select">
+                                    <!-- Lawyers will be dynamically populated here -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="case-practice-area">Practice Area</label>
+                                <select id="case-practice-area" required class="form-select">
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-50 hidden"></div>
+    
+    <!-- Add User Modal -->
+    <div id="add-user-modal" class="fixed inset-0 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h3 class="text-lg font-semibold mb-4">Add New User</h3>
+            <form id="add-user-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Full Name</label>
+                    <input type="text" name="full_name" required class="w-full px-3 py-2 border rounded-lg">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" name="email" required class="w-full px-3 py-2 border rounded-lg">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Role</label>
+                    <select name="role" required class="w-full px-3 py-2 border rounded-lg">
+                        <option value="client">Client</option>
+                        <option value="lawyer">Lawyer</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="px-4 py-2 border rounded-lg" onclick="closeModal('add-user-modal')">Cancel</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Add User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="add-category-modal" class="fixed inset-0 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h3 class="text-lg font-semibold mb-4">Add New Category</h3>
+            <form id="add-category-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Category Name</label>
+                    <input type="text" name="name" required class="w-full px-3 py-2 border rounded-lg">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                    <textarea name="description" required class="w-full px-3 py-2 border rounded-lg"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Parent Category</label>
+                    <select name="parent_id" class="w-full px-3 py-2 border rounded-lg">
+                        <option value="">None</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="px-4 py-2 border rounded-lg" onclick="closeModal('add-category-modal')">Cancel</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Add Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Skill Modal -->
+    <div id="add-skill-modal" class="fixed inset-0 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h3 class="text-lg font-semibold mb-4">Add New Skill</h3>
+            <form id="add-skill-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Skill Name</label>
+                    <input type="text" name="name" required class="w-full px-3 py-2 border rounded-lg">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Category</label>
+                    <select name="category_id" required class="w-full px-3 py-2 border rounded-lg">
+                        <!-- Categories will be dynamically added here -->
+                    </select>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="px-4 py-2 border rounded-lg" onclick="closeModal('add-skill-modal')">Cancel</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Add Skill</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/admin/js/admin.js"></script>
+</body>
+</html> 
