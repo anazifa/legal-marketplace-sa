@@ -21,27 +21,103 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <!-- Security -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; style-src 'self' https: 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" as="style">
+    
     <!-- Custom CSS -->
     <style>
+        /* Base styles */
         body {
-            font-family: 'Tajawal', sans-serif;
+            font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
+            scroll-behavior: smooth;
         }
+        
+        /* Accessibility improvements */
+        :focus {
+            outline: 3px solid #2563eb !important;
+            outline-offset: 2px !important;
+        }
+        
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            right: 0; /* RTL support */
+            background: #2563eb;
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.2s;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
+        /* Performance optimizations */
         .hero-gradient {
             background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            will-change: transform;
         }
+        
         .feature-card {
             transition: transform 0.2s ease-in-out;
+            will-change: transform;
         }
+        
         .feature-card:hover {
             transform: translateY(-5px);
+        }
+        
+        /* Responsive improvements */
+        @media (max-width: 640px) {
+            .hero-section {
+                padding: 4rem 1rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .nav-content {
+                padding: 0 1rem;
+            }
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .text-gray-600 {
+                color: #000000;
+            }
+            .text-gray-400 {
+                color: #000000;
+            }
+            .bg-blue-600 {
+                background-color: #000000;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
         }
     </style>
 </head>
 <body class="bg-gray-50">
+    <!-- Skip to main content link -->
+    <a href="#main-content" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+
     <div id="app" class="min-h-screen">
         <!-- Header -->
-        <header class="bg-white shadow-sm sticky top-0 z-50">
-            <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <header class="bg-white shadow-sm sticky top-0 z-50" role="banner">
+            <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" role="navigation" aria-label="التنقل الرئيسي">
                 <div class="flex justify-between h-16">
                     <div class="flex items-center">
                         <a href="/legal-marketplace-sa/ar/" class="flex items-center" aria-label="الرئيسية">
@@ -51,7 +127,9 @@
                     </div>
                     
                     <div class="flex items-center space-x-4">
-                        <button class="text-gray-500 hover:text-gray-700" aria-label="Change language" onclick="window.location.href='/legal-marketplace-sa/'">
+                        <button class="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                aria-label="تغيير اللغة إلى الإنجليزية"
+                                onclick="window.location.href='/legal-marketplace-sa/'">
                             English
                         </button>
                         <a href="/ar/login" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -62,90 +140,93 @@
             </nav>
         </header>
 
-        <!-- Hero Section -->
-        <section class="hero-gradient text-white py-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
-                        ابحث عن الخبرة القانونية في المملكة
-                    </h1>
-                    <p class="mt-6 text-xl sm:text-2xl max-w-3xl mx-auto">
-                        تواصل مع محامين ومستشارين قانونيين مؤهلين لاحتياجات عملك وقضاياك الشخصية
-                    </p>
-                    <div class="mt-10 flex justify-center space-x-4">
-                        <a href="/ar/find-lawyer" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            ابحث عن محامي
-                        </a>
-                        <a href="/ar/post-request" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            انشر طلبك
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-3xl font-extrabold text-gray-900">لماذا تختارنا</h2>
-                    <p class="mt-4 text-xl text-gray-600">حلول قانونية شاملة مصممة للمملكة العربية السعودية</p>
-                </div>
-
-                <div class="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    <!-- Feature 1 -->
-                    <div class="feature-card bg-white rounded-lg shadow-lg p-6">
-                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                            </svg>
+        <!-- Main Content -->
+        <main id="main-content" role="main">
+            <!-- Hero Section -->
+            <section class="hero-gradient text-white py-20 hero-section" aria-labelledby="hero-heading">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center">
+                        <h1 id="hero-heading" class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
+                            ابحث عن الخبرة القانونية في المملكة
+                        </h1>
+                        <p class="mt-6 text-xl sm:text-2xl max-w-3xl mx-auto">
+                            تواصل مع محامين ومستشارين قانونيين مؤهلين لاحتياجات عملك وقضاياك الشخصية
+                        </p>
+                        <div class="mt-10 flex justify-center space-x-4">
+                            <a href="/ar/find-lawyer" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                ابحث عن محامي
+                            </a>
+                            <a href="/ar/post-request" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                انشر طلبك
+                            </a>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900">محامون معتمدون</h3>
-                        <p class="mt-4 text-gray-600">جميع المحامين موثقون ومرخصون للممارسة في المملكة العربية السعودية</p>
-                    </div>
-
-                    <!-- Feature 2 -->
-                    <div class="feature-card bg-white rounded-lg shadow-lg p-6">
-                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900">استجابة سريعة</h3>
-                        <p class="mt-4 text-gray-600">احصل على ردود من محامين مؤهلين خلال 24 ساعة</p>
-                    </div>
-
-                    <!-- Feature 3 -->
-                    <div class="feature-card bg-white rounded-lg shadow-lg p-6">
-                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900">مدفوعات آمنة</h3>
-                        <p class="mt-4 text-gray-600">خدمات دفع وضمان محمية لراحة بالك</p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- CTA Section -->
-        <section class="bg-blue-700 py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-3xl font-extrabold text-white">مستعد للبدء؟</h2>
-                    <p class="mt-4 text-xl text-blue-100">انضم إلى آلاف العملاء والمحامين المرضيين</p>
-                    <div class="mt-8">
-                        <a href="/ar/register" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-700 focus:ring-white">
-                            إنشاء حساب مجاني
-                        </a>
+            <!-- Features Section -->
+            <section class="py-20 bg-white" aria-labelledby="features-heading">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center">
+                        <h2 id="features-heading" class="text-3xl font-extrabold text-gray-900">لماذا تختارنا</h2>
+                        <p class="mt-4 text-xl text-gray-600">حلول قانونية شاملة مصممة للمملكة العربية السعودية</p>
+                    </div>
+
+                    <div class="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 feature-grid">
+                        <!-- Feature 1 -->
+                        <div class="feature-card bg-white rounded-lg shadow-lg p-6" role="article" aria-hidden="true">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900">محامون معتمدون</h3>
+                            <p class="mt-4 text-gray-600">جميع المحامين موثقون ومرخصون للممارسة في المملكة العربية السعودية</p>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="feature-card bg-white rounded-lg shadow-lg p-6" role="article" aria-hidden="true">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900">استجابة سريعة</h3>
+                            <p class="mt-4 text-gray-600">احصل على ردود من محامين مؤهلين خلال 24 ساعة</p>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="feature-card bg-white rounded-lg shadow-lg p-6" role="article" aria-hidden="true">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900">مدفوعات آمنة</h3>
+                            <p class="mt-4 text-gray-600">خدمات دفع وضمان محمية لراحة بالك</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="bg-blue-700 py-16" aria-labelledby="cta-heading">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center">
+                        <h2 id="cta-heading" class="text-3xl font-extrabold text-white">مستعد للبدء؟</h2>
+                        <p class="mt-4 text-xl text-blue-100">انضم إلى آلاف العملاء والمحامين المرضيين</p>
+                        <div class="mt-8">
+                            <a href="/ar/register" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-700 focus:ring-white">
+                                إنشاء حساب مجاني
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
 
         <!-- Footer -->
-        <footer class="bg-gray-900 text-white">
+        <footer class="bg-gray-900 text-white" role="contentinfo">
             <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div class="col-span-2">
@@ -179,22 +260,72 @@
 
     <!-- Scripts -->
     <script>
-        // Add smooth scrolling
+        // Add smooth scrolling with keyboard navigation support
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    target.focus();
+                }
             });
         });
 
-        // Add mobile menu functionality
+        // Improved mobile menu functionality with keyboard support
         const mobileMenuButton = document.querySelector('[aria-label="Menu"]');
         const mobileMenu = document.querySelector('#mobile-menu');
         if (mobileMenuButton && mobileMenu) {
             mobileMenuButton.addEventListener('click', () => {
+                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+                mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
                 mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close menu on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    mobileMenuButton.focus();
+                }
+            });
+        }
+
+        // Announce dynamic content changes to screen readers
+        const announcer = document.createElement('div');
+        announcer.setAttribute('aria-live', 'polite');
+        announcer.setAttribute('aria-atomic', 'true');
+        announcer.classList.add('sr-only');
+        document.body.appendChild(announcer);
+
+        // Performance optimization: Lazy load images
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            if ('loading' in HTMLImageElement.prototype) {
+                images.forEach(img => {
+                    img.src = img.dataset.src;
+                });
+            } else {
+                // Fallback for browsers that don't support lazy loading
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+                document.body.appendChild(script);
+            }
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
             });
         }
     </script>
