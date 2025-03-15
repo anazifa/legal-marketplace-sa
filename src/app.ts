@@ -11,21 +11,27 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the public directory
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/legal-marketplace')
-    .then(() => console.log('Connected to MongoDB'))
-    .catch((err) => console.error('MongoDB connection error:', err));
+// Database connection (only if MONGODB_URI is provided)
+if (process.env.MONGODB_URI) {
+    mongoose.connect(process.env.MONGODB_URI)
+        .then(() => console.log('Connected to MongoDB'))
+        .catch((err) => console.error('MongoDB connection error:', err));
+}
 
-// Routes
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
+// API Routes
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'healthy' });
 });
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'healthy' });
+// Serve index.html for all other routes (SPA support)
+app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api')) {
+        res.sendFile(path.join(__dirname, '../public/index.html'));
+    }
 });
 
 // Error handling middleware

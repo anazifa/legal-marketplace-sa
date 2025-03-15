@@ -3,93 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legal Marketplace SA</title>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    <meta name="description" content="Legal Marketplace SA - Connect with top legal professionals in Saudi Arabia. Find lawyers or post legal requests.">
+    <meta name="keywords" content="legal, lawyers, Saudi Arabia, legal services, law firm, legal consultation">
+    <meta name="author" content="Legal Marketplace SA">
+    <meta property="og:title" content="Legal Marketplace SA">
+    <meta property="og:description" content="Connect with top legal professionals in Saudi Arabia">
+    <meta property="og:image" content="/images/og-image.jpg">
+    <meta property="og:url" content="https://legal-marketplace-sa.vercel.app">
+    <title>Legal Marketplace SA - Legal Services in Saudi Arabia</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.31"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+        }
+        .feature-card {
+            transition: transform 0.2s ease-in-out;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-50">
     <div id="app" class="min-h-screen">
-        <nav class="bg-white shadow-lg">
-            <div class="max-w-7xl mx-auto px-4">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-50">
+            <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex items-center">
-                        <h1 class="text-xl font-bold text-gray-800">Legal Marketplace SA</h1>
+                        <a href="/" class="flex items-center" aria-label="Home">
+                            <img src="/logo.svg" alt="Legal Marketplace SA Logo" class="h-8 w-auto">
+                            <span class="ml-2 text-xl font-semibold text-gray-900">Legal Marketplace SA</span>
+                        </a>
                     </div>
-                    <div class="flex items-center">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Login
+                    
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-500 hover:text-gray-700" aria-label="Change language">
+                            العربية
                         </button>
+                        <a href="/login" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Login
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-gradient text-white py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
+                        Find Legal Expertise in Saudi Arabia
+                    </h1>
+                    <p class="mt-6 text-xl sm:text-2xl max-w-3xl mx-auto">
+                        Connect with qualified lawyers and legal professionals for your business and personal needs
+                    </p>
+                    <div class="mt-10 flex justify-center space-x-4">
+                        <a href="/find-lawyer" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Find a Lawyer
+                        </a>
+                        <a href="/post-request" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Post a Request
+                        </a>
                     </div>
                 </div>
             </div>
-        </nav>
+        </section>
 
-        <main class="max-w-7xl mx-auto py-12 px-4">
-            <div class="text-center">
-                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                    Welcome to Legal Marketplace SA
-                </h2>
-                <p class="mt-4 text-xl text-gray-500">
-                    Connect with top legal professionals in Saudi Arabia
-                </p>
-                <div class="mt-8 flex justify-center space-x-4">
-                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg">
-                        Find a Lawyer
-                    </button>
-                    <button class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg">
-                        Post a Request
-                    </button>
+        <!-- Features Section -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Why Choose Us</h2>
+                    <p class="mt-4 text-xl text-gray-600">Comprehensive legal solutions tailored for Saudi Arabia</p>
+                </div>
+
+                <div class="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Feature 1 -->
+                    <div class="feature-card bg-white rounded-lg shadow-lg p-6">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Verified Professionals</h3>
+                        <p class="mt-4 text-gray-600">All lawyers are verified and licensed to practice in Saudi Arabia</p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="feature-card bg-white rounded-lg shadow-lg p-6">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Quick Response</h3>
+                        <p class="mt-4 text-gray-600">Get responses from qualified lawyers within 24 hours</p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="feature-card bg-white rounded-lg shadow-lg p-6">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Secure Payments</h3>
+                        <p class="mt-4 text-gray-600">Protected payments and escrow services for your peace of mind</p>
+                    </div>
                 </div>
             </div>
-        </main>
+        </section>
 
-        <footer class="bg-white mt-12">
-            <div class="max-w-7xl mx-auto py-6 px-4">
-                <p class="text-center text-gray-500">
-                    © 2024 Legal Marketplace SA. All rights reserved.
-                </p>
+        <!-- CTA Section -->
+        <section class="bg-blue-700 py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-extrabold text-white">Ready to Get Started?</h2>
+                    <p class="mt-4 text-xl text-blue-100">Join thousands of satisfied clients and legal professionals</p>
+                    <div class="mt-8">
+                        <a href="/register" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-700 focus:ring-white">
+                            Create Free Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white">
+            <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="col-span-2">
+                        <h3 class="text-xl font-semibold mb-4">Legal Marketplace SA</h3>
+                        <p class="text-gray-400">Connecting clients with qualified legal professionals in Saudi Arabia</p>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-medium mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="/about" class="text-gray-400 hover:text-white">About Us</a></li>
+                            <li><a href="/how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
+                            <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+                            <li><a href="/contact" class="text-gray-400 hover:text-white">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-medium mb-4">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="/terms" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                            <li><a href="/privacy" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                            <li><a href="/cookies" class="text-gray-400 hover:text-white">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-8 pt-8 border-t border-gray-800">
+                    <p class="text-center text-gray-400">&copy; 2024 Legal Marketplace SA. All rights reserved.</p>
+                </div>
             </div>
         </footer>
     </div>
 
+    <!-- Scripts -->
     <script>
-        const { createApp } = Vue;
-        
-        createApp({
-            data() {
-                return {
-                    message: 'Welcome to Legal Marketplace SA'
-                }
-            },
-            methods: {
-                trackLogin() {
-                    gtag('event', 'login_click', {
-                        'event_category': 'engagement',
-                        'event_label': 'header_login_button'
-                    });
-                },
-                trackFindLawyer() {
-                    gtag('event', 'find_lawyer_click', {
-                        'event_category': 'engagement',
-                        'event_label': 'main_find_lawyer_button'
-                    });
-                },
-                trackPostRequest() {
-                    gtag('event', 'post_request_click', {
-                        'event_category': 'engagement',
-                        'event_label': 'main_post_request_button'
-                    });
-                }
-            }
-        }).mount('#app');
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add mobile menu functionality
+        const mobileMenuButton = document.querySelector('[aria-label="Menu"]');
+        const mobileMenu = document.querySelector('#mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
     </script>
 </body>
 </html> 

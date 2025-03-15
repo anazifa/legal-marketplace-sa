@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "builds": [
     {
       "src": "dist/app.js",
@@ -13,11 +15,14 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "dist/app.js"
+      "dest": "/dist/app.js"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/public/$1"
+      "dest": "/public/index.html"
     }
   ]
 } 
