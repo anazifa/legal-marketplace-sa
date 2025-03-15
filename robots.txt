@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /ar/
+
+Sitemap: https://anazifa.github.io/legal-marketplace-sa/sitemap.xml 
