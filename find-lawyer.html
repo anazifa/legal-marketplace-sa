@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Lawyer - Legal Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600">Legal Marketplace</a>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="/" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Home
+                        </a>
+                        <a href="/find-lawyer" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Find a Lawyer
+                        </a>
+                        <a href="/login" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Login
+                        </a>
+                        <a href="/register" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Register
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Search Section -->
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="col-span-1">
+                    <label for="practice-area" class="block text-sm font-medium text-gray-700">Practice Area</label>
+                    <select id="practice-area" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <option value="">All Areas</option>
+                        <option value="criminal">Criminal Law</option>
+                        <option value="civil">Civil Law</option>
+                        <option value="family">Family Law</option>
+                        <option value="corporate">Corporate Law</option>
+                        <option value="property">Property Law</option>
+                    </select>
+                </div>
+                <div class="col-span-1">
+                    <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                    <input type="text" id="location" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="City or Region">
+                </div>
+                <div class="col-span-1">
+                    <label for="experience" class="block text-sm font-medium text-gray-700">Experience</label>
+                    <select id="experience" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <option value="">Any Experience</option>
+                        <option value="1-5">1-5 years</option>
+                        <option value="6-10">6-10 years</option>
+                        <option value="11-20">11-20 years</option>
+                        <option value="20+">20+ years</option>
+                    </select>
+                </div>
+                <div class="col-span-1 flex items-end">
+                    <button id="search-btn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Search Lawyers
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lawyers List -->
+        <div id="lawyers-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Lawyer cards will be dynamically added here -->
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="hidden text-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+        </div>
+
+        <!-- No Results State -->
+        <div id="no-results" class="hidden text-center py-12">
+            <p class="text-gray-500 text-lg">No lawyers found matching your criteria.</p>
+        </div>
+    </div>
+
+    <!-- Lawyer Card Template -->
+    <template id="lawyer-card-template">
+        <div class="bg-white shadow rounded-lg overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <img class="h-12 w-12 rounded-full" src="" alt="Lawyer profile">
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900"></h3>
+                        <p class="text-sm text-gray-500"></p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-briefcase mr-2"></i>
+                        <span class="practice-area"></span>
+                    </div>
+                    <div class="flex items-center text-sm text-gray-500 mt-2">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span class="location"></span>
+                    </div>
+                    <div class="flex items-center text-sm text-gray-500 mt-2">
+                        <i class="fas fa-star text-yellow-400 mr-2"></i>
+                        <span class="rating"></span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button class="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 view-profile">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        // Sample lawyer data (replace with API call)
+        const sampleLawyers = [
+            {
+                id: 1,
+                name: "John Smith",
+                title: "Senior Partner",
+                practiceArea: "Criminal Law",
+                location: "New York, NY",
+                rating: "4.8",
+                image: "https://randomuser.me/api/portraits/men/1.jpg"
+            },
+            {
+                id: 2,
+                name: "Sarah Johnson",
+                title: "Associate Attorney",
+                practiceArea: "Family Law",
+                location: "Los Angeles, CA",
+                rating: "4.6",
+                image: "https://randomuser.me/api/portraits/women/1.jpg"
+            },
+            {
+                id: 3,
+                name: "Michael Brown",
+                title: "Partner",
+                practiceArea: "Corporate Law",
+                location: "Chicago, IL",
+                rating: "4.9",
+                image: "https://randomuser.me/api/portraits/men/2.jpg"
+            }
+        ];
+
+        // Function to render lawyer cards
+        function renderLawyers(lawyers) {
+            const lawyersList = document.getElementById('lawyers-list');
+            const template = document.getElementById('lawyer-card-template');
+            lawyersList.innerHTML = '';
+
+            lawyers.forEach(lawyer => {
+                const card = template.content.cloneNode(true);
+                
+                // Set lawyer image
+                card.querySelector('img').src = lawyer.image;
+                
+                // Set lawyer details
+                card.querySelector('h3').textContent = lawyer.name;
+                card.querySelector('p').textContent = lawyer.title;
+                card.querySelector('.practice-area').textContent = lawyer.practiceArea;
+                card.querySelector('.location').textContent = lawyer.location;
+                card.querySelector('.rating').textContent = lawyer.rating;
+
+                // Add click handler to view profile button
+                card.querySelector('.view-profile').addEventListener('click', () => {
+                    window.location.href = `/lawyer-profile/${lawyer.id}`;
+                });
+
+                lawyersList.appendChild(card);
+            });
+        }
+
+        // Search functionality
+        document.getElementById('search-btn').addEventListener('click', async () => {
+            const practiceArea = document.getElementById('practice-area').value;
+            const location = document.getElementById('location').value;
+            const experience = document.getElementById('experience').value;
+
+            // Show loading state
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('no-results').classList.add('hidden');
+
+            try {
+                // Simulate API call (replace with actual API call)
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Filter lawyers based on search criteria
+                const filteredLawyers = sampleLawyers.filter(lawyer => {
+                    const matchesPracticeArea = !practiceArea || lawyer.practiceArea.toLowerCase().includes(practiceArea.toLowerCase());
+                    const matchesLocation = !location || lawyer.location.toLowerCase().includes(location.toLowerCase());
+                    return matchesPracticeArea && matchesLocation;
+                });
+
+                // Hide loading state
+                document.getElementById('loading').classList.add('hidden');
+
+                // Show results
+                if (filteredLawyers.length === 0) {
+                    document.getElementById('no-results').classList.remove('hidden');
+                } else {
+                    renderLawyers(filteredLawyers);
+                }
+            } catch (error) {
+                console.error('Error searching lawyers:', error);
+                document.getElementById('loading').classList.add('hidden');
+                alert('An error occurred while searching for lawyers. Please try again.');
+            }
+        });
+
+        // Initial render of all lawyers
+        renderLawyers(sampleLawyers);
+    </script>
+</body>
+</html> 

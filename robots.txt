@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Allow: /about.html
+Allow: /how-it-works.html
+Allow: /pricing.html
+Allow: /contact.html
+Allow: /terms.html
+Allow: /privacy.html
+Allow: /cookies.html
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /dashboard/
+
+Sitemap: https://legalmarketplace.com/sitemap.xml 

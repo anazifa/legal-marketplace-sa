@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Request - Legal Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600">Legal Marketplace</a>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="/" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Home
+                        </a>
+                        <a href="/find-lawyer" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Find a Lawyer
+                        </a>
+                        <a href="/post-request" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Post a Request
+                        </a>
+                        <a href="/login" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Login
+                        </a>
+                        <a href="/register" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Register
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-3xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Post a Legal Request</h2>
+            
+            <form id="requestForm" class="space-y-6">
+                <!-- Title -->
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700">Request Title</label>
+                    <input type="text" id="title" name="title" required
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        placeholder="Brief description of your legal need">
+                </div>
+
+                <!-- Practice Area -->
+                <div>
+                    <label for="practiceArea" class="block text-sm font-medium text-gray-700">Practice Area</label>
+                    <select id="practiceArea" name="practiceArea" required
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <option value="">Select a practice area</option>
+                        <option value="criminal">Criminal Law</option>
+                        <option value="civil">Civil Law</option>
+                        <option value="family">Family Law</option>
+                        <option value="corporate">Corporate Law</option>
+                        <option value="property">Property Law</option>
+                    </select>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Detailed Description</label>
+                    <textarea id="description" name="description" rows="4" required
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        placeholder="Please provide detailed information about your legal request..."></textarea>
+                </div>
+
+                <!-- Location -->
+                <div>
+                    <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                    <input type="text" id="location" name="location" required
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        placeholder="City, State, or Country">
+                </div>
+
+                <!-- Budget Range -->
+                <div>
+                    <label for="budget" class="block text-sm font-medium text-gray-700">Budget Range</label>
+                    <select id="budget" name="budget" required
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <option value="">Select budget range</option>
+                        <option value="1000-5000">$1,000 - $5,000</option>
+                        <option value="5000-10000">$5,000 - $10,000</option>
+                        <option value="10000-25000">$10,000 - $25,000</option>
+                        <option value="25000+">$25,000+</option>
+                    </select>
+                </div>
+
+                <!-- Timeline -->
+                <div>
+                    <label for="timeline" class="block text-sm font-medium text-gray-700">Timeline</label>
+                    <select id="timeline" name="timeline" required
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <option value="">Select timeline</option>
+                        <option value="urgent">Urgent (Within 1 week)</option>
+                        <option value="asap">As Soon As Possible (Within 1 month)</option>
+                        <option value="flexible">Flexible (1-3 months)</option>
+                        <option value="long-term">Long-term (3+ months)</option>
+                    </select>
+                </div>
+
+                <!-- Attachments -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Attachments (Optional)</label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        <div class="space-y-1 text-center">
+                            <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-3"></i>
+                            <div class="flex text-sm text-gray-600">
+                                <label for="attachments" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                    <span>Upload files</span>
+                                    <input id="attachments" name="attachments" type="file" class="sr-only" multiple>
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs text-gray-500">
+                                PDF, DOC, DOCX up to 10MB
+                            </p>
+                        </div>
+                    </div>
+                    <div id="fileList" class="mt-2 text-sm text-gray-500"></div>
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Post Request
+                    </button>
+                </div>
+            </form>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="hidden mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded relative" role="alert">
+                <span class="block sm:inline" id="successText"></span>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="hidden mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded relative" role="alert">
+                <span class="block sm:inline" id="errorText"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle file selection
+        document.getElementById('attachments').addEventListener('change', function(e) {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            Array.from(e.target.files).forEach(file => {
+                const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                const fileItem = document.createElement('div');
+                fileItem.className = 'flex items-center justify-between py-1';
+                fileItem.innerHTML = `
+                    <span>${file.name}</span>
+                    <span class="text-xs text-gray-500">${fileSize} MB</span>
+                `;
+                fileList.appendChild(fileItem);
+            });
+        });
+
+        // Handle form submission
+        document.getElementById('requestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('practiceArea', document.getElementById('practiceArea').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('location', document.getElementById('location').value);
+            formData.append('budget', document.getElementById('budget').value);
+            formData.append('timeline', document.getElementById('timeline').value);
+
+            // Append files
+            const fileInput = document.getElementById('attachments');
+            Array.from(fileInput.files).forEach(file => {
+                formData.append('attachments', file);
+            });
+
+            try {
+                const response = await fetch('/api/requests', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Request posted successfully! Redirecting to your dashboard...');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 2000);
+                } else {
+                    showError(data.message || 'Failed to post request');
+                }
+            } catch (error) {
+                showError('An error occurred. Please try again.');
+            }
+        });
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            const successText = document.getElementById('successText');
+            successText.textContent = message;
+            successDiv.classList.remove('hidden');
+            document.getElementById('errorMessage').classList.add('hidden');
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            errorText.textContent = message;
+            errorDiv.classList.remove('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+        }
+    </script>
+</body>
+</html> 
