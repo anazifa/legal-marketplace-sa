@@ -1,20 +1,98 @@
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- Users table
-CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+-- Create practice areas table
+CREATE TABLE IF NOT EXISTS practice_areas (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create users table
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    full_name VARCHAR(255) NOT NULL,
-    role VARCHAR(50) NOT NULL CHECK (role IN ('lawyer', 'client', 'admin')),
-    avatar_url VARCHAR(255),
-    title VARCHAR(255),
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL CHECK (role IN ('admin', 'lawyer', 'client')),
+    location VARCHAR(255),
+    experience_years INTEGER,
+    rating DECIMAL(3,2) DEFAULT 0,
+    profile_image VARCHAR(255),
     bio TEXT,
-    hourly_rate DECIMAL(10,2),
+    education TEXT,
+    specializations TEXT[],
+    practice_area_id INTEGER REFERENCES practice_areas(id),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Create cases table
+CREATE TABLE IF NOT EXISTS cases (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    status VARCHAR(50) NOT NULL DEFAULT 'pending',
+    client_id INTEGER REFERENCES users(id),
+    lawyer_id INTEGER REFERENCES users(id),
+    practice_area_id INTEGER REFERENCES practice_areas(id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create case attachments table
+CREATE TABLE IF NOT EXISTS case_attachments (
+    id SERIAL PRIMARY KEY,
+    case_id INTEGER REFERENCES cases(id) ON DELETE CASCADE,
+    file_name VARCHAR(255) NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    file_type VARCHAR(50),
+    file_size INTEGER,
+    uploaded_by INTEGER REFERENCES users(id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create activity log table
+CREATE TABLE IF NOT EXISTS activity_log (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    action VARCHAR(100) NOT NULL,
+    details TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create system alerts table
+CREATE TABLE IF NOT EXISTS system_alerts (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    severity VARCHAR(20) NOT NULL CHECK (severity IN ('info', 'warning', 'error')),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create indexes
+CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
+CREATE INDEX IF NOT EXISTS idx_users_practice_area ON users(practice_area_id);
+CREATE INDEX IF NOT EXISTS idx_cases_status ON cases(status);
+CREATE INDEX IF NOT EXISTS idx_cases_client ON cases(client_id);
+CREATE INDEX IF NOT EXISTS idx_cases_lawyer ON cases(lawyer_id);
+CREATE INDEX IF NOT EXISTS idx_activity_log_user ON activity_log(user_id);
+CREATE INDEX IF NOT EXISTS idx_activity_log_created ON activity_log(created_at);
+
+-- Insert sample practice areas
+INSERT INTO practice_areas (name, description) VALUES
+('Criminal Law', 'Handling criminal cases and defense'),
+('Civil Law', 'Civil litigation and disputes'),
+('Family Law', 'Family-related legal matters'),
+('Corporate Law', 'Business and corporate legal services'),
+('Property Law', 'Real estate and property matters')
+ON CONFLICT DO NOTHING;
+
+-- Insert sample admin user
+INSERT INTO users (full_name, email, password, role) VALUES
+('Admin User', 'admin@example.com', '$2a$10$YourHashedPasswordHere', 'admin')
+ON CONFLICT DO NOTHING;
 
 -- User profiles
 CREATE TABLE user_profiles (
@@ -173,5 +251,53 @@ CREATE TRIGGER update_proposals_updated_at
 
 CREATE TRIGGER update_contracts_updated_at
     BEFORE UPDATE ON contracts
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+-- Create legal requests table
+CREATE TABLE IF NOT EXISTS legal_requests (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    practice_area VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    budget_range VARCHAR(50) NOT NULL,
+    timeline VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'pending',
+    client_id INTEGER REFERENCES users(id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create request attachments table
+CREATE TABLE IF NOT EXISTS request_attachments (
+    id SERIAL PRIMARY KEY,
+    request_id INTEGER REFERENCES legal_requests(id) ON DELETE CASCADE,
+    file_name VARCHAR(255) NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    file_type VARCHAR(50),
+    file_size INTEGER,
+    uploaded_by INTEGER REFERENCES users(id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create indexes for legal requests
+CREATE INDEX IF NOT EXISTS idx_legal_requests_status ON legal_requests(status);
+CREATE INDEX IF NOT EXISTS idx_legal_requests_client ON legal_requests(client_id);
+CREATE INDEX IF NOT EXISTS idx_legal_requests_practice_area ON legal_requests(practice_area);
+CREATE INDEX IF NOT EXISTS idx_legal_requests_location ON legal_requests(location);
+CREATE INDEX IF NOT EXISTS idx_request_attachments_request ON request_attachments(request_id);
+
+-- Add trigger for updating updated_at timestamp
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_legal_requests_updated_at
+    BEFORE UPDATE ON legal_requests
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column(); 

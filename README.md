@@ -1,167 +1,88 @@
-# Legal Marketplace Admin Panel
+# Legal Marketplace Website
 
-A comprehensive admin panel for managing a legal marketplace platform. Built with Node.js, Express, TypeScript, and PostgreSQL.
+A modern, responsive website for connecting clients with legal professionals. Built with HTML, CSS, and JavaScript.
 
 ## Features
 
-- **Dashboard**
-  - Real-time statistics and metrics
-  - Activity monitoring
-  - System alerts
-  - Performance analytics
+- Responsive design for all devices
+- Multi-language support (English and Arabic)
+- Interactive testimonials carousel
+- Search functionality
+- User authentication
+- Cookie consent management
+- Form validation
+- Accessibility features
+- Smooth animations and transitions
 
-- **Case Management**
-  - Create and manage legal cases
-  - Assign lawyers to cases
-  - Track case status and progress
-  - File attachment support
-  - Advanced filtering and search
+## Technologies Used
 
-- **User Management**
-  - Manage lawyers and clients
-  - User role management
-  - Profile management
-  - Activity tracking
+- HTML5
+- CSS3 (with Tailwind CSS)
+- JavaScript (ES6+)
+- Local Storage for user preferences
+- Intersection Observer API for animations
 
-- **Practice Areas**
-  - Categorize legal services
-  - Track case distribution
-  - Manage specializations
+## Getting Started
 
-- **Reports & Analytics**
-  - Revenue tracking
-  - User activity analysis
-  - Case statistics
-  - Custom report generation
+### Prerequisites
 
-## Prerequisites
+- A modern web browser
+- Basic understanding of HTML, CSS, and JavaScript
 
-- Node.js (v14 or higher)
-- PostgreSQL (v12 or higher)
-- TypeScript
-- npm or yarn
-
-## Installation
+### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/legal-marketplace-admin.git
-   cd legal-marketplace-admin
-   ```
+```bash
+git clone https://github.com/yourusername/legal-marketplace.git
+```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+2. Navigate to the project directory:
+```bash
+cd legal-marketplace
+```
 
-3. Create a `.env` file in the root directory with the following variables:
-   ```env
-   # Database Configuration
-   DB_USER=your_db_user
-   DB_HOST=localhost
-   DB_NAME=legal_marketplace
-   DB_PASSWORD=your_db_password
-   DB_PORT=5432
+3. Open `index.html` in your web browser or use a local server.
 
-   # Server Configuration
-   PORT=3000
-   NODE_ENV=development
+### Using a Local Server
 
-   # JWT Configuration
-   JWT_SECRET=your_jwt_secret
-   JWT_EXPIRES_IN=24h
+You can use any local server to run the project. Here are a few options:
 
-   # File Upload Configuration
-   MAX_FILE_SIZE=10485760 # 10MB
-   UPLOAD_DIR=uploads
-   ```
+1. Using Python:
+```bash
+# Python 3
+python -m http.server 8000
 
-4. Initialize the database:
-   ```bash
-   npm run init-db
-   ```
+# Python 2
+python -m SimpleHTTPServer 8000
+```
 
-5. Start the development server:
-   ```bash
-   npm run dev
-   ```
+2. Using Node.js:
+```bash
+# Install http-server globally
+npm install -g http-server
+
+# Run the server
+http-server
+```
+
+3. Using VS Code:
+Install the "Live Server" extension and click "Go Live" in the bottom right corner.
 
 ## Project Structure
 
 ```
-├── src/
-│   ├── middleware/
-│   │   ├── auth.ts
-│   │   └── upload.ts
-│   ├── routes/
-│   │   └── admin.ts
-│   ├── db/
-│   │   └── schema.sql
-│   └── index.ts
+legal-marketplace/
 ├── public/
-│   └── admin/
-│       ├── index.html
-│       └── js/
-│           └── admin.js
-├── uploads/
-├── .env
+│   ├── css/
+│   │   └── styles.css
+│   │   └── admin.css
+│   ├── js/
+│   │   └── main.js
+│   │   └── admin.js
+│   ├── images/
+│   └── index.html
 ├── .gitignore
-├── package.json
-└── tsconfig.json
-```
-
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/login` - Admin login
-- `POST /api/auth/logout` - Admin logout
-
-### Dashboard
-- `GET /api/admin/dashboard/stats` - Get dashboard statistics
-
-### Cases
-- `GET /api/admin/cases` - List all cases
-- `POST /api/admin/cases` - Create a new case
-- `GET /api/admin/cases/:id` - Get case details
-- `PUT /api/admin/cases/:id` - Update case
-- `DELETE /api/admin/cases/:id` - Delete case
-
-### Case Attachments
-- `POST /api/admin/cases/:id/attachments` - Upload attachments
-- `GET /api/admin/cases/:caseId/attachments/:attachmentId/download` - Download attachment
-- `DELETE /api/admin/cases/:caseId/attachments/:attachmentId` - Delete attachment
-
-### Users
-- `GET /api/admin/users` - List all users
-- `POST /api/admin/users` - Create new user
-
-### Practice Areas
-- `GET /api/admin/practice-areas` - List practice areas
-
-## Security Features
-
-- JWT Authentication
-- Role-based access control
-- File upload validation
-- SQL injection prevention
-- XSS protection
-- Rate limiting
-- Security headers
-
-## Development
-
-```bash
-# Run in development mode
-npm run dev
-
-# Build for production
-npm run build
-
-# Run in production mode
-npm start
-
-# Run tests
-npm test
+└── README.md
 ```
 
 ## Contributing
@@ -174,8 +95,9 @@ npm test
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Support
+## Acknowledgments
 
-For support, email support@legalmarketplace.com or open an issue in the GitHub repository. 
+- Tailwind CSS for the styling framework
+- All contributors who have helped with the project 
