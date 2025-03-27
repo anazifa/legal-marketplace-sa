@@ -16,4 +16,8 @@ updates:
           - "*"
     ignore:
       - dependency-name: "*"
-        versions: ["0.0.0"] 
+        versions: ["0.0.0"]
+      - dependency-name: "typescript"
+        versions: ["5.0.0"]
+      - dependency-name: "@types/node"
+        versions: ["20.0.0"] 
